@@ -1,0 +1,31 @@
+﻿@model IEnumerable<PostSys.Models.Course>
+@{
+	ViewBag.Title = "MineCourse";
+}
+
+<h2>Mine</h2>
+
+@Html.ActionLink("Submit your Post", "PostTopic", "Posts")
+
+@using (Html.BeginForm("MineCourse", "Courses", FormMethod.Get))
+{
+	<table class="table table-hover">
+		<tr>
+			<th>Id</th>
+			<th>Student Name</th>
+			<th>Course Name</th>
+			<th>Course StartDate</th>
+			<th>Course EndDate</th>
+		</tr>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<th>@item.Id</th>
+				<th>@item.Student.UserName</th>
+				<th>@item.Name</th>
+				<th>@item.StartDate</th>
+				<th>@item.EndDate</th>
+			</tr>
+		}
+	</table>
+}
