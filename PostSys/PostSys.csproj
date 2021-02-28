@@ -296,13 +296,14 @@
     <Content Include="Views\Courses\Index.cshtml" />
     <None Include="Views\Courses\AssignStudentToCourse.cshtml" />
     <Content Include="Views\Courses\MineCourse.cshtml" />
-    <Content Include="Views\Posts\PostTopic.cshtml" />
-    <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Posts\MinePost.cshtml" />
+    <None Include="Views\Posts\PostTopic.cshtml.bak" />
+    <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\ErrorValidations\Exist.cshtml" />
     <Content Include="Views\ErrorValidations\Null.cshtml" />
     <Content Include="Views\Courses\ManageCourse.cshtml" />
     <Content Include="Views\Posts\ManagePost.cshtml" />
+    <Content Include="Views\Courses\PostTopic.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,6 +14,8 @@ namespace PostSys.ViewModels
 		public Post Post { get; set; }
 		
 		//manage course
+		public int postId { get; set; }
+		public int courseId { get; set; }
 		public string courseName { get; set; }
 		public string className { get; set; }
 		public string studentName { get; set; }
@@ -22,8 +24,5 @@ namespace PostSys.ViewModels
 
 		//manage post
 		public string postName { get; set; }
-		/*public string className { get; set; }
-		public string studentName { get; set; }
-		public string courseName { get; set; }*/
 	}
 }

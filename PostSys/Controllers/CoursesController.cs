@@ -62,12 +62,12 @@ namespace PostSys.Controllers
 				return View("~/Views/ErrorValidations/Null.cshtml");
 			}
 
-			var checkStudentInCourse = _context.Courses.Any(c => c.ClassId == course.ClassId ||
+			/*var checkStudentInCourse = _context.Courses.Any(c => c.ClassId == course.ClassId ||
 																   c.StudentId == course.StudentId);
 			if (checkStudentInCourse == true)
 			{
 				return View("~/Views/ErrorValidations/Exist.cshtml");
-			}
+			}*/
 
 			//Get class
 			/*var CurrentUserId = User.Identity.GetUserId();
@@ -104,6 +104,16 @@ namespace PostSys.Controllers
 			return RedirectToAction("Index");
 		}
 
+		public ActionResult DeleteManageMineCourse(int Id)
+		{
+			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == Id);
+
+			_context.Courses.Remove(courseInDb);
+			_context.SaveChanges();
+
+			return RedirectToAction("ManageCourse");
+		}
+
 		[HttpGet]
 		/*[Authorize(Roles = "Student")]*/
 		public ActionResult MineCourse()
@@ -124,6 +134,7 @@ namespace PostSys.Controllers
 					   on cl.Id equals c.ClassId
 					   select new
 					   {
+						   courseId = c.Id,
 						   courseName = c.Name,
 						   className = cl.Name,
 						   studentName = (from st in _context.Users where st.Id.Contains(c.StudentId) select st.UserName),
@@ -132,6 +143,7 @@ namespace PostSys.Controllers
 					   }
 					   ).ToList().Select(p => new PostCourseViewModel()
 					   {
+						   courseId = p.courseId,
 						   courseName = p.courseName,
 						   className = p.className,
 						   studentName = string.Join(",", p.studentName),
@@ -141,7 +153,46 @@ namespace PostSys.Controllers
 					   );
 			return View(obj);
 			
+			
+		}
 
-	}
+
+
+
+		/////////////////////////////////////////
+		[HttpGet]
+		public ActionResult PostTopic(int id)
+		{
+			var currentStudent = User.Identity.GetUserId();
+			var showMineCourse = _context.Courses.Where(m => m.StudentId == currentStudent).Include(m => m.Student).ToList();
+
+			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
+
+			var newPostCourseViewModel = new PostCourseViewModel
+			{
+				Course = courseInDb
+			};
+
+			return View(newPostCourseViewModel);
+		}
+
+
+		[HttpPost]
+		public ActionResult PostTopic(Post post, Course course)
+		{
+
+			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == course.Id);
+			
+			var newPost = new Post
+			{
+				CourseId = courseInDb.Id,
+				Name = post.Name,
+			};
+
+			_context.Posts.Add(newPost);
+			_context.SaveChanges();
+
+			return View("~/Views/Home/Index.cshtml");
+		}
 	}
 }

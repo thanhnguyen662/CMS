@@ -1,0 +1,39 @@
+﻿@model PostSys.ViewModels.PostCourseViewModel
+@{
+	ViewBag.Title = "PostTopic";
+}
+
+<h2>PostTopic</h2>
+
+@using (Html.BeginForm("PostTopic", "Courses", FormMethod.Post))
+{
+	<div class="form-group">
+		@Html.LabelFor(p => p.Post.Name)
+		@Html.TextBoxFor(p => p.Post.Name, new { @class = "form-control" })
+		@Html.ValidationMessageFor(p => p.Post.Name, "", new { @class = "text-danger" })
+	</div>
+
+	@Html.HiddenFor(p => p.Post.CourseId)
+
+	@*<div class="form-group">
+			@Html.LabelFor(m => m.Post.CourseId)
+			@Html.DropDownListFor(m => m.Post.CourseId,
+				new SelectList(Model.Courses, "Id", "Name"), "Select Course",
+				new { @class = "form-control" }
+			)
+		</div>*@
+
+	<div type="submit">
+		<button class="btn btn-primary" onclick="SendEmail()">Submit</button>
+	</div>
+
+	<script>
+		var SendEmail = function () {
+			$.ajax({
+				type: "Post",
+				url: "/Posts/SendEmailToUser",
+
+			})
+		}
+	</script>
+}

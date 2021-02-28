@@ -32,7 +32,7 @@ namespace PostSys.Controllers
 			return View(showPost);
 		}
 
-		[HttpGet]
+		/*[HttpGet]
 		public ActionResult PostTopic()
 		{
 			var currentStudent = User.Identity.GetUserId();
@@ -61,6 +61,29 @@ namespace PostSys.Controllers
 			_context.SaveChanges();
 
 			return View("~/Views/Home/Index.cshtml");
+		}*/
+
+		[HttpGet]
+		public ActionResult MinePost()
+		{
+			var getCurrentStudent = User.Identity.GetUserId();
+			var obj = (from c in _context.Courses
+					   where c.StudentId.Contains(getCurrentStudent)
+					   join p in _context.Posts
+					   on c.Id equals p.CourseId
+					   select new
+					   {
+						   Id = p.Id, 
+						   Name = p.Name,
+						   Course = c.Name
+					   }).ToList().Select(po => new PostCourseViewModel()
+					   {
+						   postName = po.Name,
+						   postId = po.Id,
+						   courseName  = po.Course
+					   }
+					   ).ToList();
+			return View(obj);
 		}
 
 		[HttpGet]
@@ -74,7 +97,18 @@ namespace PostSys.Controllers
 			return RedirectToAction("Index");
 		}
 
-		
+		[HttpGet]
+		public ActionResult DeleteMinePost (int Id)
+		{
+			var courseInDb = _context.Posts.SingleOrDefault(c => c.Id == Id);
+
+			_context.Posts.Remove(courseInDb);
+			_context.SaveChanges();
+
+			return RedirectToAction("MinePost");
+		}
+
+
 
 		[HttpGet]
 		public ActionResult ManagePost()

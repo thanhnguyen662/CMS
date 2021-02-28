@@ -16,6 +16,7 @@
 		<tr>
 			<th>Id</th>
 			<th>Name</th>
+			<th>Coordinator Name</th>
 			<th>Faculty</th>
 			<th>Delete</th>
 		</tr>
@@ -24,6 +25,7 @@
 			<tr>
 				<td>@item.Id</td>
 				<td>@item.Name</td>
+				<td>@item.Coordinator.UserName</td>
 				<td>@item.Faculty.Name</td>
 				<td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>
 			</tr>
