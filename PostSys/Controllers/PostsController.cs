@@ -32,36 +32,6 @@ namespace PostSys.Controllers
 			return View(showPost);
 		}
 
-		/*[HttpGet]
-		public ActionResult PostTopic()
-		{
-			var currentStudent = User.Identity.GetUserId();
-			var showMineCourse = _context.Courses.Where(m => m.StudentId == currentStudent).Include(m => m.Student).ToList();
-
-			var newPostCourseViewModel = new PostCourseViewModel
-			{
-				Courses = showMineCourse,
-			};
-
-			return View(newPostCourseViewModel);
-		}
-
-
-		[HttpPost]
-		public ActionResult PostTopic(Post post)
-		{
-
-			var newPost = new Post
-			{
-				CourseId = post.CourseId,
-				Name = post.Name,
-			};
-
-			_context.Posts.Add(newPost);
-			_context.SaveChanges();
-
-			return View("~/Views/Home/Index.cshtml");
-		}*/
 
 		[HttpGet]
 		public ActionResult MinePost()
@@ -142,6 +112,20 @@ namespace PostSys.Controllers
 				return View(ojb);
 			}
 		}
+
+		public FileResult Download(int id)
+		{
+			var getFileById = (from fb in _context.Posts
+							   where fb.Id.Equals(id)
+							   select new
+							   {
+								   fb.File,
+								   fb.UrlFile
+							   }).ToList().FirstOrDefault();
+
+			return File(getFileById.File, "file", getFileById.UrlFile);
+		}
+
 
 		public bool SendEmail(string toEmail, string emailSubject, string emailBody)
 		{

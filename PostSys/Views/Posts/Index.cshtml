@@ -26,6 +26,9 @@
 				<th>@item.Course.Class.Name</th>
 				<th>@item.Course.Student.UserName</th>
 				<th>@Html.ActionLink("Delete", "Delete", new { id=item.Id })</th>
+				<th class="sorting">
+                    @Html.ActionLink("Download", "Download", new { id=item.Id })
+                </th>
 			</tr>
 		}
 	</table>

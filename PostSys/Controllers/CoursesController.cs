@@ -163,8 +163,8 @@ namespace PostSys.Controllers
 		[HttpGet]
 		public ActionResult PostTopic(int id)
 		{
-			var currentStudent = User.Identity.GetUserId();
-			var showMineCourse = _context.Courses.Where(m => m.StudentId == currentStudent).Include(m => m.Student).ToList();
+			/*var currentStudent = User.Identity.GetUserId();
+			var showMineCourse = _context.Courses.Where(m => m.StudentId == currentStudent).Include(m => m.Student).ToList();*/
 
 			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
 
@@ -178,8 +178,19 @@ namespace PostSys.Controllers
 
 
 		[HttpPost]
-		public ActionResult PostTopic(Post post, Course course)
+		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile")] Post post, Course course, HttpPostedFileBase file)
 		{
+			if (file != null && file.ContentLength > 0)
+			{
+				post.File = new byte[file.ContentLength]; // image stored in binary formate
+				file.InputStream.Read(post.File, 0, file.ContentLength);
+				string fileName = System.IO.Path.GetFileName(file.FileName);
+				string urlImage = Server.MapPath("~/Files/" + fileName);
+				file.SaveAs(urlImage);
+
+				post.UrlFile = "Files/" + fileName;
+			}
+
 
 			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == course.Id);
 			
@@ -187,6 +198,9 @@ namespace PostSys.Controllers
 			{
 				CourseId = courseInDb.Id,
 				Name = post.Name,
+				Description = post.Description,
+				File = post.File,
+				UrlFile = post.UrlFile
 			};
 
 			_context.Posts.Add(newPost);
