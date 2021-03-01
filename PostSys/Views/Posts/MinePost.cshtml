@@ -14,6 +14,7 @@
 			<th>Student Name</th>
 			<th>Course Name</th>
 			<th>Delete</th>
+			<th>Show Comment</th>
 		</tr>
 		@foreach (var item in Model)
 		{
@@ -21,6 +22,7 @@
 				<th>@item.postName</th>
 				<th>@item.courseName</th>
 				<th>@Html.ActionLink("Delete", "DeleteMinePost", new { id = item.postId })</th>
+				<th>@Html.ActionLink("Show Comment", "ShowComment", new { id = item.postId })</th>
 			</tr>
 		}
 	</table>

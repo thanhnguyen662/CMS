@@ -21,8 +21,11 @@
 				<th>@item.courseName</th>
 				<th>@item.className</th>
 				<th>@item.postName</th>
+				<td>@Html.ActionLink("Post your Comment", "AddComment", new { id = item.postId })</td>
+				<th class="sorting">
+					@Html.ActionLink("Download", "Download", new { id=item.postId })
+				</th>
 			</tr>
-
 		}
 	</table>
 }

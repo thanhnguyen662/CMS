@@ -10,7 +10,8 @@ namespace PostSys.Models
 		public int Id { get; set; }
 		public string Reply { get; set; }
 
-
+		public int PostId { get; set; }
+		public Post Post { get; set; }
 
 	}
 }

@@ -214,6 +214,10 @@
     <Compile Include="Migrations\202103010152102_AddPostTable1.Designer.cs">
       <DependentUpon>202103010152102_AddPostTable1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103011011065_AddCommentTable.cs" />
+    <Compile Include="Migrations\202103011011065_AddCommentTable.Designer.cs">
+      <DependentUpon>202103011011065_AddCommentTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -228,6 +232,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CoordinatorFacultyViewModel.cs" />
     <Compile Include="ViewModels\ManageCoursePostViewModel.cs" />
+    <Compile Include="ViewModels\PostCommentViewModel.cs" />
     <Compile Include="ViewModels\PostCourseViewModel.cs" />
     <Compile Include="ViewModels\StudentToCourseViewModel.cs" />
     <Compile Include="ViewModels\UserInRolesViewModel.cs" />
@@ -302,6 +307,7 @@
     <None Include="Views\Courses\AssignStudentToCourse.cshtml" />
     <Content Include="Views\Courses\MineCourse.cshtml" />
     <Content Include="Views\Posts\MinePost.cshtml" />
+    <Content Include="Views\Posts\AddComment.cshtml" />
     <None Include="Views\Posts\PostTopic.cshtml.bak" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\ErrorValidations\Exist.cshtml" />
@@ -309,6 +315,7 @@
     <Content Include="Views\Courses\ManageCourse.cshtml" />
     <Content Include="Views\Posts\ManagePost.cshtml" />
     <Content Include="Views\Courses\PostTopic.cshtml" />
+    <Content Include="Views\Posts\ShowComment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -355,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103010152102_AddPostTable1.resx">
       <DependentUpon>202103010152102_AddPostTable1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103011011065_AddCommentTable.resx">
+      <DependentUpon>202103011011065_AddCommentTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

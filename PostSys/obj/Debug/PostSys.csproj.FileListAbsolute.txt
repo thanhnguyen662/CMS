@@ -343,3 +343,4 @@ C:\Users\Thanh Nguyen\Source\Repos\CMS-Final-1\PostSys\obj\Debug\PostSys.csproj.
 C:\Users\Thanh Nguyen\Source\Repos\CMS-Final-1\PostSys\obj\Debug\PostSys.dll
 C:\Users\Thanh Nguyen\Source\Repos\CMS-Final-1\PostSys\obj\Debug\PostSys.pdb
 C:\Users\Thanh Nguyen\Source\Repos\CMS-Final-1\PostSys\obj\Debug\PostSys.Migrations.AddPostTable1.resources
+C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\obj\Debug\PostSys.Migrations.AddCommentTable.resources

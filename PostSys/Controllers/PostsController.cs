@@ -95,6 +95,7 @@ namespace PostSys.Controllers
 						   on c.Id equals p.CourseId
 						   select new
 						   {
+							   postId = p.Id,
 							   postName = p.Name,
 							   courseName = c.Name,
 							   studentName = (from st in _context.Users where st.Id == c.StudentId select st.UserName),
@@ -102,6 +103,7 @@ namespace PostSys.Controllers
 						   }
 					).ToList().Select(p => new PostCourseViewModel()
 					{
+						postId = p.postId,
 						postName = p.postName,
 						courseName = p.courseName,
 						studentName = string.Join(",", p.studentName),
@@ -120,6 +122,43 @@ namespace PostSys.Controllers
 
 			return File(getFileById.File, "file", getFileById.UrlFile);
 		}
+
+
+		[HttpGet]
+		public ActionResult AddComment()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult AddComment(Post post, Comment comment)
+		{
+			var getPostId = _context.Posts.SingleOrDefault(m => m.Id == post.Id);
+
+			var newComent = new Comment
+			{
+				PostId = getPostId.Id,
+				Reply = comment.Reply
+			};
+
+			_context.Comments.Add(newComent);
+			_context.SaveChanges();
+			
+			return View("~/Views/Home/Index.cshtml");
+		}
+
+		[HttpGet]
+		public ActionResult ShowComment(Post post, int id)
+		{
+			var getPostId = _context.Posts.SingleOrDefault(m => m.Id == post.Id);
+
+			var getCommentInPost = _context.Comments.Where(m => m.PostId == id).ToList();
+
+			return View(getCommentInPost);
+		}
+
+
+
 
 
 		public bool SendEmail(string toEmail, string emailSubject, string emailBody)

@@ -72,12 +72,12 @@ namespace PostSys.Controllers
 
 			var currentUserId = User.Identity.GetUserId();
 			var obj = (from cl in _context.Classes where cl.CoordinatorId.Contains(currentUserId) select cl.Id).ToList();
-			var ClassId = obj[0];
+			var classId = obj[0];
 
 			var newStudentInCourse = new Course
 			{
 				Name = course.Name,
-				ClassId = ClassId,
+				ClassId = classId,
 				StartDate = course.StartDate,
 				EndDate = course.EndDate,
 				StudentId = course.StudentId
@@ -154,16 +154,16 @@ namespace PostSys.Controllers
 
 		/////////////////////////////////////////
 		[HttpGet]
-		public ActionResult PostTopic(int id)
+		public ActionResult PostTopic(/*int id*/)
 		{
-			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
+			/*var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
 
 			var newPostCourseViewModel = new PostCourseViewModel
 			{
 				Course = courseInDb
-			};
+			};*/
 
-			return View(newPostCourseViewModel);
+			return View(/*newPostCourseViewModel*/);
 		}
 
 		[HttpPost]
