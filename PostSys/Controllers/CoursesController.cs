@@ -33,7 +33,7 @@ namespace PostSys.Controllers
 		public ActionResult AssignStudentToCourse()
 		{
 			var currentUserId = User.Identity.GetUserId();
-			var showMineClass = _context.Classes.Where(m => m.CoordinatorId == currentUserId).Include(m => m.Coordinator).ToList();
+			/*var showMineClass = _context.Classes.Where(m => m.CoordinatorId == currentUserId).Include(m => m.Coordinator).ToList();*/
 
 
 			//Get account in role student
@@ -47,7 +47,7 @@ namespace PostSys.Controllers
 			var newStudentInCourseViewModel = new StudentToCourseViewModel
 			{
 				Students = showAllStudentInRole,
-				Classes = showMineClass
+				/*Classes = showMineClass*/
 			};
 
 			return View(newStudentInCourseViewModel);
@@ -69,17 +69,15 @@ namespace PostSys.Controllers
 				return View("~/Views/ErrorValidations/Exist.cshtml");
 			}*/
 
-			//Get class
-			/*var CurrentUserId = User.Identity.GetUserId();
-			var obj = (from classid in _context.Classes where classid.CoordinatorId == CurrentUserId select classid.Id).ToList();
-			var classId = obj[0];*/
-			
-			
+
+			var currentUserId = User.Identity.GetUserId();
+			var obj = (from cl in _context.Classes where cl.CoordinatorId.Contains(currentUserId) select cl.Id).ToList();
+			var ClassId = obj[0];
 
 			var newStudentInCourse = new Course
 			{
 				Name = course.Name,
-				ClassId = course.ClassId,
+				ClassId = ClassId,
 				StartDate = course.StartDate,
 				EndDate = course.EndDate,
 				StudentId = course.StudentId
@@ -152,20 +150,12 @@ namespace PostSys.Controllers
 					   }
 					   );
 			return View(obj);
-			
-			
 		}
-
-
-
 
 		/////////////////////////////////////////
 		[HttpGet]
 		public ActionResult PostTopic(int id)
 		{
-			/*var currentStudent = User.Identity.GetUserId();
-			var showMineCourse = _context.Courses.Where(m => m.StudentId == currentStudent).Include(m => m.Student).ToList();*/
-
 			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
 
 			var newPostCourseViewModel = new PostCourseViewModel
@@ -175,7 +165,6 @@ namespace PostSys.Controllers
 
 			return View(newPostCourseViewModel);
 		}
-
 
 		[HttpPost]
 		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile")] Post post, Course course, HttpPostedFileBase file)
@@ -190,7 +179,6 @@ namespace PostSys.Controllers
 
 				post.UrlFile = "Files/" + fileName;
 			}
-
 
 			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == course.Id);
 			

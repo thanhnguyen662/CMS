@@ -113,15 +113,10 @@ namespace PostSys.Controllers
 			}
 		}
 
-		public FileResult Download(int id)
+		public FileResult Download(/*int id, */ Post post)
 		{
-			var getFileById = (from fb in _context.Posts
-							   where fb.Id.Equals(id)
-							   select new
-							   {
-								   fb.File,
-								   fb.UrlFile
-							   }).ToList().FirstOrDefault();
+
+			var getFileById = _context.Posts.SingleOrDefault(c => c.Id == post.Id);
 
 			return File(getFileById.File, "file", getFileById.UrlFile);
 		}
