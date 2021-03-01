@@ -13,6 +13,8 @@ namespace PostSys.Models
 		public byte[] File { get; set; }
 		public string UrlFile { get; set; }
 
+		public DateTime PostDate { get; set; }
+
 		public int CourseId {get; set;}
 		public Course Course { get; set; }
 	}

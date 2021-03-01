@@ -32,17 +32,24 @@
 	</div>
 	//////////////////////////////
 
-	<div type="submit">
-		<button class="btn btn-primary" onclick="SendEmail()">Submit</button>
-	</div>
+	if (Model.Status == 1)
+	{
+		<div type="submit">
+			<button class="btn btn-primary" onclick="SendEmail()">Submit</button>
+		</div>
 
-	<script>
-		var SendEmail = function () {
-			$.ajax({
-				type: "Post",
-				url: "/Posts/SendEmailToUser",
+		<script>
+			var SendEmail = function () {
+				$.ajax({
+					type: "Post",
+					url: "/Posts/SendEmailToUser",
 
-			})
-		}
-	</script>
+				})
+			}
+		</script>
+	}
+	else
+	{
+		<a href="#" class="btn btn-primary btn-lg disabled" role="button" aria-disabled="true">Co cet qua deadline roi cu</a>
+	}
 }

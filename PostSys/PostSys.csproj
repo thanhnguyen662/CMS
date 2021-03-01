@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.15.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.15.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -55,6 +58,12 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -218,6 +227,10 @@
     <Compile Include="Migrations\202103011011065_AddCommentTable.Designer.cs">
       <DependentUpon>202103011011065_AddCommentTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103011252076_AddPostTable2.cs" />
+    <Compile Include="Migrations\202103011252076_AddPostTable2.Designer.cs">
+      <DependentUpon>202103011252076_AddPostTable2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -226,6 +239,7 @@
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Faculty.cs" />
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -308,6 +322,7 @@
     <Content Include="Views\Courses\MineCourse.cshtml" />
     <Content Include="Views\Posts\MinePost.cshtml" />
     <Content Include="Views\Posts\AddComment.cshtml" />
+    <None Include="Views\Posts\ManagerIndex.cshtml.bak" />
     <None Include="Views\Posts\PostTopic.cshtml.bak" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\ErrorValidations\Exist.cshtml" />
@@ -365,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103011011065_AddCommentTable.resx">
       <DependentUpon>202103011011065_AddCommentTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103011252076_AddPostTable2.resx">
+      <DependentUpon>202103011252076_AddPostTable2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

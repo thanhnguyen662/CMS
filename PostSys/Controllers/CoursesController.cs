@@ -69,6 +69,11 @@ namespace PostSys.Controllers
 				return View("~/Views/ErrorValidations/Exist.cshtml");
 			}*/
 
+			if (course.StartDate >= course.EndDate)
+			{
+				return View("~/Views/ErrorValidations/Null.cshtml");
+			}
+
 
 			var currentUserId = User.Identity.GetUserId();
 			var obj = (from cl in _context.Classes where cl.CoordinatorId.Contains(currentUserId) select cl.Id).ToList();
@@ -154,20 +159,36 @@ namespace PostSys.Controllers
 
 		/////////////////////////////////////////
 		[HttpGet]
-		public ActionResult PostTopic(/*int id*/)
+		public ActionResult PostTopic(int id)
 		{
-			/*var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
+			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == id);
+			//check deadline
+
+
+			int status;
+			if (DateTime.Now <= courseInDb.EndDate) //can submit
+			{
+				status = 1;
+			}
+			else //can't submit
+			{
+				status = 0;
+			}
 
 			var newPostCourseViewModel = new PostCourseViewModel
 			{
-				Course = courseInDb
-			};*/
+				Course = courseInDb,
+				// 1 = can Submit
+				// 0 = can't Submit
+				Status = status
 
-			return View(/*newPostCourseViewModel*/);
+			};
+
+			return View(newPostCourseViewModel);
 		}
 
 		[HttpPost]
-		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile")] Post post, Course course, HttpPostedFileBase file)
+		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate")] Post post, Course course, HttpPostedFileBase file)
 		{
 			if (file != null && file.ContentLength > 0)
 			{
@@ -187,6 +208,7 @@ namespace PostSys.Controllers
 				CourseId = courseInDb.Id,
 				Name = post.Name,
 				Description = post.Description,
+				PostDate = DateTime.Now,
 				File = post.File,
 				UrlFile = post.UrlFile
 			};

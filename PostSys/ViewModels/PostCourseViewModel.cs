@@ -12,6 +12,7 @@ namespace PostSys.ViewModels
 		public IEnumerable<Post> Posts { get; set; }
 		public Course Course { get; set; }
 		public Post Post { get; set; }
+
 		
 		//manage course
 		public int postId { get; set; }
@@ -24,5 +25,8 @@ namespace PostSys.ViewModels
 
 		//manage post
 		public string postName { get; set; }
+
+		//set deadline
+		public int Status { get; set; }
 	}
 }

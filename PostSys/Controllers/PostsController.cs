@@ -11,7 +11,8 @@ using System.Configuration;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
-
+using System.IO;
+using Ionic.Zip;
 
 namespace PostSys.Controllers
 {
@@ -115,7 +116,7 @@ namespace PostSys.Controllers
 			}
 		}
 
-		public FileResult Download(/*int id, */ Post post)
+		public FileResult Download(Post post)
 		{
 
 			var getFileById = _context.Posts.SingleOrDefault(c => c.Id == post.Id);
@@ -156,10 +157,6 @@ namespace PostSys.Controllers
 
 			return View(getCommentInPost);
 		}
-
-
-
-
 
 		public bool SendEmail(string toEmail, string emailSubject, string emailBody)
 		{
@@ -222,6 +219,50 @@ namespace PostSys.Controllers
 
 			return Json(result, JsonRequestBehavior.AllowGet);
 		}
+
+
+
+		/////////////////////////////////////////
+		//Only Manager can see this index
+		/*[HttpGet]
+		public ActionResult ManagerIndex()
+		{
+			string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/"));
+			List<FileModel> files = new List<FileModel>();
+			foreach (string filePath in filePaths)
+			{
+				files.Add(new FileModel()
+				{
+					FileName = Path.GetFileName(filePath),
+					FilePath = filePath
+				});
+			}
+
+			return View(files);
+		}
+
+		[HttpPost]
+		public ActionResult ManagerIndex(List<FileModel> files)
+		{
+			using (ZipFile zip = new ZipFile())
+			{
+				zip.AlternateEncodingUsage = ZipOption.AsNecessary;
+				zip.AddDirectoryByName("Files");
+				foreach (FileModel file in files)
+				{
+					if (file.IsSelected)
+					{
+						zip.AddFile(file.FilePath, "Files");
+					}
+				}
+				string zipName = String.Format("FilesZip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
+				using (MemoryStream memoryStream = new MemoryStream())
+				{
+					zip.Save(memoryStream);
+					return File(memoryStream.ToArray(), "application/zip", zipName);
+				}
+			}
+		}*/
 	}
 }
 

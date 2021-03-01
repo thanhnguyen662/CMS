@@ -14,7 +14,9 @@
 			<th>Course Name</th>
 			<th>Class Name</th>
 			<th>Student Name</th>
+			<th>Post Date</th>
 			<th>Delete</th>
+			<th>Download</th>
 
 		</tr>
 		@foreach (var item in Model)
@@ -25,6 +27,7 @@
 				<th>@item.Course.Name</th>
 				<th>@item.Course.Class.Name</th>
 				<th>@item.Course.Student.UserName</th>
+				<th>@item.PostDate</th>
 				<th>@Html.ActionLink("Delete", "Delete", new { id=item.Id })</th>
 				<th class="sorting">
 					@Html.ActionLink("Download", "Download", new { id=item.Id })
