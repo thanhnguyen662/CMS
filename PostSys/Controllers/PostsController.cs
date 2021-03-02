@@ -158,6 +158,127 @@ namespace PostSys.Controllers
 			return View(getCommentInPost);
 		}
 
+		[HttpGet]
+		public ActionResult DeleteComment(int Id)
+		{
+			var commentInDb = _context.Comments.SingleOrDefault(c => c.Id == Id);
+
+			_context.Comments.Remove(commentInDb);
+			_context.SaveChanges();
+
+			return RedirectToAction("ShowComment");
+		}
+
+
+		[HttpGet]
+		public ActionResult AddPostToPublication()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult AddPostToPublication(Post post)
+		{
+			var getPostId = _context.Posts.SingleOrDefault(m => m.Id == post.Id);
+
+			var newPublication = new Publication
+			{
+				PostId = getPostId.Id
+			};
+
+			_context.Publications.Add(newPublication);
+			_context.SaveChanges();
+
+			return View(newPublication);
+		}
+
+		[HttpGet]
+		public ActionResult ListPublication()
+		{
+			var showListPublication = _context.Publications.Include(p => p.Post).ToList();
+			return View(showListPublication);
+		}
+
+		[HttpGet]
+		public ActionResult MinePublication()
+		{
+			//get all publication
+			var showListPublication = _context.Publications.Include(p => p.Post).ToList();
+			//Get currentId
+			var currentID = User.Identity.GetUserId();
+			// get current class
+			var coorClass = (from co in _context.Users
+							 where co.Id.Contains(currentID)
+							 join cl in _context.Classes
+							 on co.Id equals cl.CoordinatorId
+							 select cl.Id).ToList();
+			// get current classID
+			var classId = coorClass[0];
+			//get all course by current classID
+			var currentCourse = _context.Courses.Where(m => m.ClassId == classId).ToList();
+			//get all post by current Course 
+			var coursePost = (from c in _context.Courses
+							  where c.ClassId == classId
+							  join p in _context.Posts
+							  on c.Id equals p.CourseId
+							  select new
+							  {
+								  Id = p.Id,
+								  Name = p.Name,
+								  Description = p.Description,
+								  File = p.File,
+								  UrlFile = p.UrlFile,
+								  PostDate = p.PostDate,
+								  CourseId = p.CourseId
+
+							  }
+							  ).ToList().Select(m => new Post()
+							  {
+								  Id = m.Id,
+								  Name = m.Name,
+								  Description = m.Description,
+								  File = m.File,
+								  UrlFile = m.UrlFile,
+								  PostDate = m.PostDate,
+								  CourseId = m.CourseId
+
+							  }).ToList();
+
+			//Get minePublication list post
+			var publication = (from s in showListPublication
+							   join cp in coursePost
+							   on s.Post.Id equals cp.Id
+							   select s
+							   ).ToList();
+
+		
+
+			return View(publication);
+		}
+
+		[HttpGet]
+		public ActionResult DeletePublication(int Id)
+		{
+			var publicationInDb = _context.Publications.SingleOrDefault(c => c.Id == Id);
+
+			_context.Publications.Remove(publicationInDb);
+			_context.SaveChanges();
+
+			return RedirectToAction("ListPublication");
+		}
+
+
+		[HttpGet]
+		public ActionResult DeleteMinePublication(int Id)
+		{
+			var publicationInDb = _context.Publications.SingleOrDefault(c => c.Id == Id);
+
+			_context.Publications.Remove(publicationInDb);
+			_context.SaveChanges();
+
+			return RedirectToAction("MinePublication");
+		}
+
 		public bool SendEmail(string toEmail, string emailSubject, string emailBody)
 		{
 

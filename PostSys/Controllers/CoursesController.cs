@@ -91,7 +91,7 @@ namespace PostSys.Controllers
 			_context.Courses.Add(newStudentInCourse);
 			_context.SaveChanges();
 
-			return RedirectToAction("Index");
+			return RedirectToAction("AssignStudentToCourse");
 
 		}
 

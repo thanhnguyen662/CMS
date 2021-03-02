@@ -15,6 +15,7 @@ namespace PostSys.Models
 		public DbSet<Course> Courses { get; set; }
 		public DbSet<Post> Posts { get; set; }
 		public DbSet<Comment> Comments { get; set; }
+		public DbSet<Publication> Publications { get; set; }
 
 		public static ApplicationDbContext Create()
 		{

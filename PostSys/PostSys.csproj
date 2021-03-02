@@ -231,6 +231,10 @@
     <Compile Include="Migrations\202103011252076_AddPostTable2.Designer.cs">
       <DependentUpon>202103011252076_AddPostTable2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103020943498_AddPublicationTable.cs" />
+    <Compile Include="Migrations\202103020943498_AddPublicationTable.Designer.cs">
+      <DependentUpon>202103020943498_AddPublicationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -249,6 +253,7 @@
     <Compile Include="ViewModels\ManageCoursePostViewModel.cs" />
     <Compile Include="ViewModels\PostCommentViewModel.cs" />
     <Compile Include="ViewModels\PostCourseViewModel.cs" />
+    <Compile Include="ViewModels\PostPublicationViewModel.cs" />
     <Compile Include="ViewModels\StudentToCourseViewModel.cs" />
     <Compile Include="ViewModels\UserInRolesViewModel.cs" />
   </ItemGroup>
@@ -323,7 +328,10 @@
     <Content Include="Views\Courses\MineCourse.cshtml" />
     <Content Include="Views\Posts\MinePost.cshtml" />
     <Content Include="Views\Posts\AddComment.cshtml" />
+    <Content Include="Views\Posts\AddPostToPublication.cshtml" />
+    <Content Include="Views\Posts\ListPublication.cshtml" />
     <None Include="Views\Posts\ManagerIndex.cshtml" />
+    <Content Include="Views\Posts\MinePublication.cshtml" />
     <None Include="Views\Posts\PostTopic.cshtml.bak" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\ErrorValidations\Exist.cshtml" />
@@ -384,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103011252076_AddPostTable2.resx">
       <DependentUpon>202103011252076_AddPostTable2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103020943498_AddPublicationTable.resx">
+      <DependentUpon>202103020943498_AddPublicationTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

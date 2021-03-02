@@ -26,12 +26,12 @@
 	</div>
 
 	@*<div class="form-group">
-		@Html.LabelFor(m => m.Course.Class.Name)
-		@Html.DropDownListFor(m => m.Course.ClassId,
-			new SelectList(Model.Classes, "Id", "Name"), "Select Class",
-			new { @class = "form-control" }
-		)
-	</div>*@
+			@Html.LabelFor(m => m.Course.Class.Name)
+			@Html.DropDownListFor(m => m.Course.ClassId,
+				new SelectList(Model.Classes, "Id", "Name"), "Select Class",
+				new { @class = "form-control" }
+			)
+		</div>*@
 
 	<div class="form-group">
 		@Html.LabelFor(m => m.Course.Student.UserName)
@@ -41,5 +41,7 @@
 		)
 	</div>
 
-	<button type="submit" class="btn btn-primary">Assign</button>
+	<button type="submit" class="btn btn-primary">Assign more</button>
+
+	<a type="submit" class="btn btn-warning" href="~/Courses/ManageCourse">back to manage course</a>
 }
