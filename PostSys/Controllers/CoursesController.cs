@@ -188,14 +188,30 @@ namespace PostSys.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate")] Post post, Course course, HttpPostedFileBase file)
+		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate")] Post post, Course course, HttpPostedFileBase file, int id)
 		{
 			if (file != null && file.ContentLength > 0)
 			{
+				var userName = User.Identity.GetUserName();
+				var coursePost = (from c in _context.Courses where c.Id == id select c.Name).ToList();
+				//Get courseName 
+				var courseName = coursePost[0];
+				//Get class Name
+				var courseClass = (from c in _context.Courses
+								   where c.Id == id
+								   join cl in _context.Classes
+								   on c.ClassId equals cl.Id
+								   select cl.Name).ToList();
+				var className = courseClass[0];
+
+				string prepend = userName + "_" + courseName + "_" + className;
+
 				post.File = new byte[file.ContentLength]; // image stored in binary formate
 				file.InputStream.Read(post.File, 0, file.ContentLength);
-				string fileName = System.IO.Path.GetFileName(file.FileName);
+				string fileName = prepend + System.IO.Path.GetExtension(file.FileName);
 				string urlImage = Server.MapPath("~/Files/" + fileName);
+
+				
 				file.SaveAs(urlImage);
 
 				post.UrlFile = "Files/" + fileName;

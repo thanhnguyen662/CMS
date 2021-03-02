@@ -192,6 +192,7 @@ namespace PostSys.Controllers
 								 join c in _context.Courses
 								 on st.Id equals c.StudentId
 								 select c.ClassId).ToList();
+
 			var courseStudentId = courseStudent[0];
 			var classCoordinator = (from cc in _context.Classes
 									where cc.Id == courseStudentId
@@ -224,7 +225,7 @@ namespace PostSys.Controllers
 
 		/////////////////////////////////////////
 		//Only Manager can see this index
-		/*[HttpGet]
+		[HttpGet]
 		public ActionResult ManagerIndex()
 		{
 			string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/"));
@@ -262,7 +263,7 @@ namespace PostSys.Controllers
 					return File(memoryStream.ToArray(), "application/zip", zipName);
 				}
 			}
-		}*/
+		}
 	}
 }
 
