@@ -355,7 +355,10 @@ namespace PostSys.Controllers
 			{
 				files.Add(new FileModel()
 				{
-					FileName = Path.GetFileName(filePath),
+/*					FileName = Path.GetFileName(filePath),*/
+
+					FileName = Path.GetFileNameWithoutExtension(filePath),
+
 					FilePath = filePath
 				});
 			}

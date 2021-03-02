@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using PostSys.ViewModels;
 using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace PostSys.Controllers
 {
@@ -187,9 +188,36 @@ namespace PostSys.Controllers
 			return View(newPostCourseViewModel);
 		}
 
+		private bool ValidateExtension(string extension)
+		{
+			extension = extension.ToLower();
+			switch (extension)
+			{
+				case ".jpg":
+					return true;
+				case ".png":
+					return true;
+				case ".doc":
+					return true;
+				case ".docx":
+					return true;
+				case ".jpeg":
+					return true;
+				default:
+					return false;
+			}
+		}
+
 		[HttpPost]
 		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate")] Post post, Course course, HttpPostedFileBase file, int id)
 		{
+			string extension = Path.GetExtension(file.FileName);
+
+			if (!ValidateExtension(extension))
+			{
+				return View("~/Views/ErrorValidations/Exist.cshtml");
+			}
+
 			if (file != null && file.ContentLength > 0)
 			{
 				var userName = User.Identity.GetUserName();
