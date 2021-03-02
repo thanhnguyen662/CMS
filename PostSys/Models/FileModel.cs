@@ -10,5 +10,6 @@ namespace PostSys.Models
 		public string FileName { get; set; }
 		public string FilePath { get; set; }
 		public bool IsSelected { get; set; }
+
 	}
 }
