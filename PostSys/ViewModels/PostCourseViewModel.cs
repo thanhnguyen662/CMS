@@ -10,6 +10,8 @@ namespace PostSys.ViewModels
 	{
 		public IEnumerable<Course> Courses{ get; set; }
 		public IEnumerable<Post> Posts { get; set; }
+
+
 		public Course Course { get; set; }
 		public Post Post { get; set; }
 

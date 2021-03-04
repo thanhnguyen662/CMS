@@ -33,7 +33,6 @@ namespace PostSys.Controllers
 			return View(showPost);
 		}
 
-
 		[HttpGet]
 		public ActionResult MinePost()
 		{
@@ -81,7 +80,7 @@ namespace PostSys.Controllers
 
 
 
-		[HttpGet]
+		/*[HttpGet]
 		public ActionResult ManagePost()
 		{
 			{
@@ -114,6 +113,19 @@ namespace PostSys.Controllers
 
 				return View(ojb);
 			}
+		}*/
+
+		[HttpGet]
+		public ActionResult ManageMinePost()
+		{
+			var getCurrentCoordinator = User.Identity.GetUserName();
+			var getCourse = _context.Courses.ToList();
+			var getClass = _context.Classes.ToList();
+			var getStudent = _context.Users.ToList();
+
+			var getPostOfCoordinator = _context.Posts.Where(m => m.Course.Class.Coordinator.UserName == getCurrentCoordinator).Include(m => m.Course);
+
+			return View(getPostOfCoordinator.ToList());
 		}
 
 		public FileResult Download(Post post)
@@ -195,11 +207,16 @@ namespace PostSys.Controllers
 		[HttpGet]
 		public ActionResult ListPublication()
 		{
+			var getPost = _context.Posts.ToList();
+			var getCourse = _context.Courses.ToList();
+			var getClass = _context.Classes.ToList();
+			var getCoordinator = _context.Users.ToList();
+
 			var showListPublication = _context.Publications.Include(p => p.Post).ToList();
 			return View(showListPublication);
 		}
 
-		[HttpGet]
+		/*[HttpGet]
 		public ActionResult MinePublication()
 		{
 			//get all publication
@@ -254,7 +271,23 @@ namespace PostSys.Controllers
 		
 
 			return View(publication);
+		}*/
+
+
+		/////////////////
+		public ActionResult ManageMinePublication()
+		{
+			var getCurrentCoordinator = User.Identity.GetUserName();
+			var getPost = _context.Posts.ToList();
+			var getCourse = _context.Courses.ToList();
+			var getClass = _context.Classes.ToList();
+			var getCoordinator = _context.Users.ToList();
+
+			var getPublicationOfCoordinator = _context.Publications.Where(m => m.Post.Course.Class.Coordinator.UserName == getCurrentCoordinator).Include(m => m.Post);
+
+			return View(getPublicationOfCoordinator.ToList());
 		}
+		////////////////
 
 		[HttpGet]
 		public ActionResult DeletePublication(int Id)
@@ -353,15 +386,24 @@ namespace PostSys.Controllers
 			List<FileModel> files = new List<FileModel>();
 			foreach (string filePath in filePaths)
 			{
+				////////
+				/*string getFileName = Path.GetFileName(filePath);
+				string[] getUsernameFromFileName = getFileName.Split('_');*/
+
+				/*foreach (var word in getUsernameFromFileName)
+				{
+					System.Console.WriteLine($"<{word}>");
+				}*/
+
+				////////
 				files.Add(new FileModel()
 				{
-/*					FileName = Path.GetFileName(filePath),*/
-
-					FileName = Path.GetFileNameWithoutExtension(filePath),
-
-					FilePath = filePath
+					FileName = Path.GetFileName(filePath),
+					FilePath = filePath,
+					/*UserNameInFile = getUsernameFromFileName[0]*/
 				});
 			}
+
 
 			return View(files);
 		}

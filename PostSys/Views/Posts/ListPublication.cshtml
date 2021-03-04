@@ -10,6 +10,9 @@
 <table class="table table-hover">
 	<tr>
 		<th>Post Name</th>
+		<th>Course Name</th>
+		<th>Class Name</th>
+		<th>Coordinator Name</th>
 		<th>Delete</th>
 
 	</tr>
@@ -17,7 +20,10 @@
 	{
 		<tr>
 			<th>@item.Post.Name</th>
-			<th>@Html.ActionLink("Delete", "DeletePublication", new { id = item.Id })</th>
+			<th>@item.Post.Course.Name</th>
+			<th>@item.Post.Course.Class.Name</th>
+			<th>@item.Post.Course.Class.Coordinator.UserName</th>
+			<th>@Html.ActionLink("Delete", "DeleteMinePublication", new { id = item.Id })</th>
 		</tr>
 	}
 </table>

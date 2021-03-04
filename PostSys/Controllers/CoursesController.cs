@@ -128,6 +128,7 @@ namespace PostSys.Controllers
 			return View(mineCourse);
 		}
 
+		/*[HttpGet]
 		public ActionResult ManageCourse()
 		{
 			var currentCoordinatorId = User.Identity.GetUserId();	
@@ -156,8 +157,19 @@ namespace PostSys.Controllers
 					   }
 					   );
 			return View(obj);
-		}
+		}*/
 
+		/////////////////////////////
+		[HttpGet]
+		public ActionResult ManageMineCourse()
+		{
+			var currentCoordinatorUserName = User.Identity.GetUserName();
+			var getClass = _context.Classes.Include(m => m.Coordinator).ToList();
+
+			var getCourseOfCoordinator = _context.Courses.Where(m => m.Class.Coordinator.UserName == currentCoordinatorUserName).Include(m => m.Class);
+
+			return View(getCourseOfCoordinator.ToList());
+		}
 		/////////////////////////////////////////
 		[HttpGet]
 		public ActionResult PostTopic(int id)
@@ -195,14 +207,14 @@ namespace PostSys.Controllers
 			{
 				case ".jpg":
 					return true;
+				case ".jpeg":
+					return true;
 				case ".png":
 					return true;
 				case ".doc":
 					return true;
 				case ".docx":
-					return true;
-				case ".jpeg":
-					return true;
+					return true;				
 				default:
 					return false;
 			}

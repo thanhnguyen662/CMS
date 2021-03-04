@@ -11,5 +11,7 @@ namespace PostSys.Models
 		public string FilePath { get; set; }
 		public bool IsSelected { get; set; }
 
+		public string UserNameInFile { get; set; }
+
 	}
 }
