@@ -403,7 +403,7 @@ namespace PostSys.Controllers
 		[HttpGet]
 		public ActionResult ManagerIndex()
 		{
-			string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/"));
+			string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/TempFiles"));
 			List<FileModel> files = new List<FileModel>();
 			foreach (string filePath in filePaths)
 			{
@@ -438,10 +438,7 @@ namespace PostSys.Controllers
 				zip.AddDirectoryByName("Files");
 				foreach (FileModel file in files)
 				{
-					if (file.IsSelected)
-					{
-						zip.AddFile(file.FilePath, "Files");
-					}
+					zip.AddFile(file.FilePath, "Files");
 				}
 				string zipName = String.Format("FilesZip_{0}.zip", DateTime.Now.ToString("yyyy-MMM-dd-HHmmss"));
 				using (MemoryStream memoryStream = new MemoryStream())
@@ -450,6 +447,31 @@ namespace PostSys.Controllers
 					return File(memoryStream.ToArray(), "application/zip", zipName);
 				}
 			}
+		}
+
+		[HttpGet]
+		public ActionResult AddTotempFiles(int Id)
+		{
+			var courseInDb = _context.Posts.SingleOrDefault(c => c.Id == Id);
+			string rootFolder = Server.MapPath("~/Files/");
+			string tempFolder = Server.MapPath("~/Files/TempFiles");
+
+			var listFileName = _context.Posts.Where(p => p.Id == Id).Select(p => p.NameOfFile).ToList();
+			string nameOfFile = listFileName[0];
+			System.IO.File.Copy(Path.Combine(rootFolder, nameOfFile), Path.Combine(tempFolder, nameOfFile));
+			return RedirectToAction("Index");
+		}
+
+		[HttpGet]
+		public ActionResult DeleteTempFile()
+		{
+			string[] filePaths = Directory.GetFiles(Server.MapPath("~/Files/TempFiles"));
+			List<FileModel> files = new List<FileModel>();
+			foreach (string filePath in filePaths)
+			{
+				System.IO.File.Delete(filePath);
+			}
+			return RedirectToAction("Index");
 		}
 	}
 }
