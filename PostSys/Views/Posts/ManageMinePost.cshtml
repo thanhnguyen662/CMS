@@ -20,12 +20,12 @@
 		@foreach (var item in Model)
 		{
 			<tr>
-				<th>@item.Course.Student.UserName</th>
+				<th class="sorting">@item.Course.Student.UserName</th>
 				<th>@item.Course.Name</th>
 				<th>@item.Course.Class.Name</th>
 				<th>@item.Name</th>
 				<td>@Html.ActionLink("Post your Comment", "AddComment", new { id = item.Id })</td>
-				<td>@Html.ActionLink("Add to Publication", "AddPostToPublication", new { id = item.Id })</td>
+				<td>@Html.ActionLink("Add to Publication", "AddPostToPublication", new { id = item.Id })</td>	
 				<th class="sorting">
 					@Html.ActionLink("Download", "Download", new { id = item.Id})
 				</th>

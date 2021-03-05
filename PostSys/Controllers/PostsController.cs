@@ -36,8 +36,14 @@ namespace PostSys.Controllers
 		[HttpGet]
 		public ActionResult MinePost()
 		{
-			var getCurrentStudent = User.Identity.GetUserId();
-			var obj = (from c in _context.Courses
+			/*var getCurrentStudent = User.Identity.GetUserId();*/
+			var getCurrentStudent = User.Identity.GetUserName();
+			var getCourse = _context.Courses.ToList();
+			var getStudent = _context.Users.ToList();
+
+			var getStudentPost = _context.Posts.Where(m => m.Course.Student.UserName == getCurrentStudent).Include(m => m.Course);
+
+			/*var obj = (from c in _context.Courses
 					   where c.StudentId.Contains(getCurrentStudent)
 					   join p in _context.Posts
 					   on c.Id equals p.CourseId
@@ -52,8 +58,9 @@ namespace PostSys.Controllers
 						   postId = po.Id,
 						   courseName  = po.Course
 					   }
-					   ).ToList();
-			return View(obj);
+					   ).ToList();*/
+
+			return View(getStudentPost.ToList());
 		}
 
 		[HttpGet]
@@ -183,12 +190,22 @@ namespace PostSys.Controllers
 
 
 		[HttpGet]
-		public ActionResult AddPostToPublication()
+		public ActionResult AddPostToPublication(Post post)
 		{
-			return View();
+			var getPostId = _context.Posts.SingleOrDefault(m => m.Id == post.Id);
+
+			var newPublication = new Publication
+			{
+				PostId = getPostId.Id
+			};
+
+			_context.Publications.Add(newPublication);
+			_context.SaveChanges();
+
+			return RedirectToAction("ManageMinePost");
 		}
 
-		[HttpPost]
+		/*[HttpPost]
 		public ActionResult AddPostToPublication(Post post)
 		{
 			var getPostId = _context.Posts.SingleOrDefault(m => m.Id == post.Id);
@@ -202,7 +219,7 @@ namespace PostSys.Controllers
 			_context.SaveChanges();
 
 			return View(newPublication);
-		}
+		}*/
 
 		[HttpGet]
 		public ActionResult ListPublication()
@@ -367,7 +384,6 @@ namespace PostSys.Controllers
 							  on c.ClassId equals cl.Id
 							  select cl.Name).ToList();
 			var className = classNames[0];
-
 
 			result = SendEmail($"{coordinatorEmail}", "Notification Email", $"Student: {getCurrentStudent} <br> Course: {currentCourseName} <br> Class: {className} <br> Already submit a post");
 
