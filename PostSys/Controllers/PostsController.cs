@@ -68,23 +68,27 @@ namespace PostSys.Controllers
 		{
 			var courseInDb = _context.Posts.SingleOrDefault(c => c.Id == Id);
 
-			_context.Posts.Remove(courseInDb);
-			_context.SaveChanges();
 
-			return RedirectToAction("Index");
-		}
+			string rootFolder = Server.MapPath("~/Files/");
 
-		[HttpGet]
-		public ActionResult DeleteMinePost (int Id)
-		{
-			var courseInDb = _context.Posts.SingleOrDefault(c => c.Id == Id);
+			var listFileName = _context.Posts.Where(p => p.Id == Id).Select(p => p.NameOfFile).ToList();
+			string nameOfFile = listFileName[0];
+
+			System.IO.File.Delete(Path.Combine(rootFolder, nameOfFile));
 
 			_context.Posts.Remove(courseInDb);
 			_context.SaveChanges();
 
-			return RedirectToAction("MinePost");
+			if (User.IsInRole("Marketing Coodinator"))
+			{
+				return RedirectToAction("Index");
+			}
+			if (User.IsInRole("Student"))
+			{
+				return RedirectToAction("MinePost");
+			}
+			return View();
 		}
-
 
 
 		/*[HttpGet]
@@ -365,6 +369,7 @@ namespace PostSys.Controllers
 								 select c.ClassId).ToList();
 
 			var courseStudentId = courseStudent[0];
+
 			var classCoordinator = (from cc in _context.Classes
 									where cc.Id == courseStudentId
 									join co in _context.Users

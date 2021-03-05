@@ -51,7 +51,7 @@
 			<tr>
 				<th>@item.Course.Student.UserName</th>
 				<th>@item.Course.Name</th>
-				<th>@Html.ActionLink("Delete", "DeleteMinePost", new { id = item.Id })</th>
+				<th>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</th>
 				<th>@Html.ActionLink("Show Comment", "ShowComment", new { id = item.Id })</th>
 			</tr>
 		}

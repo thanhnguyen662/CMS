@@ -221,7 +221,7 @@ namespace PostSys.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate")] Post post, Course course, HttpPostedFileBase file, int id)
+		public ActionResult PostTopic([Bind(Include = "Name, Description, Status, File, UrlFile, PostDate, NameOfFile")] Post post, Course course, HttpPostedFileBase file, int id)
 		{
 			string extension = Path.GetExtension(file.FileName);
 
@@ -251,6 +251,7 @@ namespace PostSys.Controllers
 				string fileName = prepend + System.IO.Path.GetExtension(file.FileName);
 				string urlImage = Server.MapPath("~/Files/" + fileName);
 
+				post.NameOfFile = fileName;
 				
 				file.SaveAs(urlImage);
 
@@ -260,7 +261,8 @@ namespace PostSys.Controllers
 			var courseInDb = _context.Courses.SingleOrDefault(c => c.Id == course.Id);
 			
 			var newPost = new Post
-			{
+			{				
+				NameOfFile = post.NameOfFile,
 				CourseId = courseInDb.Id,
 				Name = post.Name,
 				Description = post.Description,

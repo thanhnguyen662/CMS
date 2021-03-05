@@ -12,6 +12,7 @@ namespace PostSys.Models
 		public string Description { get; set; }
 		public byte[] File { get; set; }
 		public string UrlFile { get; set; }
+		public string NameOfFile { get; set; }
 
 		public DateTime PostDate { get; set; }
 

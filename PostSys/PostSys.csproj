@@ -235,6 +235,10 @@
     <Compile Include="Migrations\202103020943498_AddPublicationTable.Designer.cs">
       <DependentUpon>202103020943498_AddPublicationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103050404401_AddPostTable3.cs" />
+    <Compile Include="Migrations\202103050404401_AddPostTable3.Designer.cs">
+      <DependentUpon>202103050404401_AddPostTable3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -405,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103020943498_AddPublicationTable.resx">
       <DependentUpon>202103020943498_AddPublicationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103050404401_AddPostTable3.resx">
+      <DependentUpon>202103050404401_AddPostTable3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

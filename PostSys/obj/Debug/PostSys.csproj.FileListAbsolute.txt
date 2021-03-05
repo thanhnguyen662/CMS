@@ -349,3 +349,4 @@ C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\bin\DotNetZip.pdb
 C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\bin\DotNetZip.xml
 C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\obj\Debug\PostSys.Migrations.AddPostTable2.resources
 C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\obj\Debug\PostSys.Migrations.AddPublicationTable.resources
+C:\Users\Thanh Nguyen\source\repos\CMS-Final-1\PostSys\obj\Debug\PostSys.Migrations.AddPostTable3.resources
